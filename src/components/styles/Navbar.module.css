@@ -1,8 +1,27 @@
 .navbar_container {
-    background-color: #A3E6CD;
+    /* background-color: #A3E6CD; */
+    background-color: #97D7BF;
     min-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo_link {
+    text-decoration: none;
+    margin-left: 5vh;
 }
 .home_logo {
     margin-top: 0;
     margin-bottom: 0;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 18pt;
+    color: black;
 }
+.buttons_container {
+    margin-right: 5vh;
+}
+.add_contact_button {
+    margin-right: 5vh;
+}
+
+/* TODO: when the screen size is too small, make it a hamburger button with a slide out menu */
