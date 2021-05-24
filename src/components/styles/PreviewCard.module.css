@@ -1,0 +1,28 @@
+.card_container {
+    background-color: white;
+    width: 75vh;
+    border-radius: 10px;
+    padding: 1vh;
+    padding-left: 2vh;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.avatar_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: cadetblue; */
+    flex: 1;
+}
+.divider_decoration {
+    border-left: 1px solid rgba(151, 136, 136, 0.521);
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.content_section {
+    flex: 4;
+    text-align: center;
+    /* background-color: red; */
+}

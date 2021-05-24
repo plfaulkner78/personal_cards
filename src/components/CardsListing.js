@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from "./styles/CardsListing.module.css";
 import PreviewCard from "./PreviewCard";
-import {Link} from "react-router-dom";
 
 const testArr = [
-    {"name": "Steve", "details": "zookeeper", id: 1},
-    {"name": "Jane", "details": "lawyer", id: 2},
+    {"name": "Steve Jobs", "details": "zookeeper", id: 1},
+    {"name": "Jane Jackson", "details": "lawyer", id: 2},
     {"name": "Jane", "details": "lawyer", id: 3},
     {"name": "Jane", "details": "lawyer", id: 4},
     {"name": "Jane", "details": "lawyer", id: 5},
@@ -23,12 +22,13 @@ const testArr = [
 
 const CardsListing = () => {
     return (
-        <div className={styles.listing_container}>
-            {testArr.map(item => (
-                <Link to={`/details/${item.id}`} key={item.id}>
-                    <PreviewCard info={item} />
-                </Link>
-            ))}
+        <div className={styles.content_container}>
+            <h1>Sort by section</h1>
+            <div className={styles.list_container}>
+                {testArr.map(item => (
+                    <PreviewCard info={item} key={item.id} />
+                ))}
+            </div>
         </div>
     )
 }

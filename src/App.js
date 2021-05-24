@@ -3,6 +3,7 @@ import {useState} from "react";
 import Navbar from "./components/Navbar";
 import CardsListing from "./components/CardsListing";
 import ContactDetails from "./components/ContactDetails";
+import NewContact from "./components/NewContact";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
             <ContactDetails />
           </Route>
           <Route exact path="/newContact">
-            <h1>Add a new contact</h1>
+            <NewContact />
           </Route>
           <Route>
             <h1>404 Error</h1>

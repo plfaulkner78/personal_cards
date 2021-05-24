@@ -1,0 +1,31 @@
+.content_container {
+    display: flex;
+    min-height: 100vh;
+}
+.avatar_container {
+    /* background-color: red; */
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+}
+.avatar {
+    margin-top: 30%;
+}
+.avatar:hover {
+    cursor: pointer;
+}
+.form_container {
+    /* background-color: blue; */
+    flex: 5;
+}
+.contact_form {
+    margin-top: 20%;
+    margin-left: 5%;
+    max-width: fit-content;
+    /* background-color: yellow; */
+}
+.create_btn {
+    position: absolute;
+    left: 50%;
+    margin-top: 1em;
+}
