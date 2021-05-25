@@ -31,3 +31,8 @@
     left: 50%;
     margin-top: 1em;
 }
+.title_button_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

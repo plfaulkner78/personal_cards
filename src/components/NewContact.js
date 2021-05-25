@@ -20,10 +20,9 @@ const NewContact = ({onNewContactAdd}) => {
     function handleFormSubmit(e) {
         e.preventDefault();
 
-        let id = Date.now() + "_" + name.split(' ').join('_');
         let contactInfo = {
             name, reasonForKnowing, education, work, hometown, birthday, interests, mutualFriends, additionalInfo,
-            createdAt: Date.now(), id
+            createdAt: Date.now(), id: `${Date.now()}_${Math.floor(Math.random() * 100)}`
         }
 
         onNewContactAdd(contactInfo);

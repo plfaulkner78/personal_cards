@@ -10,7 +10,7 @@ const sampleArr = [
         "mutualFriends": "Woz",
         "additionalInfo": "",
         "createdAt": 1621912526147,
-        "id": "1621912526147_Steve_Jobs"
+        "id": "1621912526147_44"
     },
     {
         "name": "Tupac", 
@@ -23,7 +23,7 @@ const sampleArr = [
         "mutualFriends": "",
         "additionalInfo": "",
         "createdAt": 1621913088492,
-        "id": "1621913088492_Tupac"
+        "id": "1621913088492_32"
     },
     {
         "name": "Biggie", 
@@ -36,7 +36,7 @@ const sampleArr = [
         "mutualFriends": "",
         "additionalInfo": "",
         "createdAt": 1621913909456,
-        "id": "1621913909456_Biggie"
+        "id": "1621913909456_98"
     },
     {
         "name": "LeBron James", 
@@ -49,7 +49,7 @@ const sampleArr = [
         "mutualFriends": "",
         "additionalInfo": "",
         "createdAt": 1621914068502,
-        "id": "1621914068502_LeBron_Jame"
+        "id": "1621914068502_61"
     },
     {
         "name": "Barack Obama", 
@@ -62,7 +62,7 @@ const sampleArr = [
         "mutualFriends": "",
         "additionalInfo": "",
         "createdAt": 1621914087244,
-        "id": "1621914087244_Barack_Obama"
+        "id": "1621914087244_76"
     },
     {
         "name": "Elon Musk", 
@@ -75,7 +75,7 @@ const sampleArr = [
         "mutualFriends": "",
         "additionalInfo": "",
         "createdAt": 1621914097903,
-        "id": "1621914097903_Elon_Musk"
+        "id": "1621914097903_11"
     },
 ];
 

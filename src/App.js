@@ -35,8 +35,11 @@ function App() {
     setSearchTerm(e.target.value);
   }
 
+  function setContactState(updatedArr) {
+    setContacts(updatedArr);
+  }
 
-  const filteredContacts = contacts.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  let filteredContacts = contacts.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div className="App">
@@ -47,7 +50,7 @@ function App() {
             <CardsListing contacts={filteredContacts} addSampleData={addSampleData}  />
           </Route>
           <Route exact path="/details/:id">
-            <ContactDetails contacts={filteredContacts} />
+            <ContactDetails setContactState={setContactState} contacts={filteredContacts} />
           </Route>
           <Route exact path="/newContact">
             <NewContact onNewContactAdd={handleNewContactAdd} />
