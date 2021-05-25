@@ -11,7 +11,7 @@ const PreviewCard = ({info}) => {
     return (
         <div className={styles.card_container}>
             <div className={styles.avatar_section}>
-                <Avatar name={info.name} size={50} marginRight={16} />
+                <Avatar name={info.name} size={70} marginRight={16} />
             </div>
             <div className={styles.divider_decoration} />  
             <div className={styles.content_section}>

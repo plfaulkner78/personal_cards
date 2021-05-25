@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
 import { TextInputField, Avatar, Button, Pane, Label, Textarea } from 'evergreen-ui';
 import styles from "./styles/NewEditContact.module.css";
 import DefaultAvatar from '../images/defaultAvatar.jpeg';
@@ -14,12 +15,16 @@ const NewContact = () => {
     const [mutualFriends, setMutualFriends] = useState('');
     const [additionalInfo, setAdditionalInfo] = useState('');
 
+    const history = useHistory();
+
     function handleFormSubmit(e) {
         e.preventDefault();
         let contactInfo = {
             name, reasonForKnowing, education, work, hometown, birthday, interests, mutualFriends, additionalInfo
         }
         console.log(contactInfo);
+        history.push('/');
+        window.scrollTo(0, 0);
     }
 
     return (
@@ -31,6 +36,7 @@ const NewContact = () => {
             </div>
             <div className={styles.form_container}>
                 <form className={styles.contact_form} onSubmit={handleFormSubmit}>
+                    <h1>New Contact</h1>
                     <TextInputField
                         label="Name"
                         required
@@ -100,12 +106,13 @@ const NewContact = () => {
                         />
                     </Pane>
                     {/* TODO: restyle the Button better so it's not absolute positioning */}
-                    <Button 
-                        onClick={handleFormSubmit} 
+                    <Button
+                        type="submit"
                         className={styles.create_btn} 
                         marginRight={16} 
                         appearance="primary" 
                         intent="success"
+                        //isLoading={true}
                     >Create</Button>
                 </form>
             </div>
