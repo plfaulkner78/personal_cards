@@ -47,7 +47,7 @@ function App() {
         <Navbar onSearchInputChange={handleSearchInputChange} />
         <Switch>
           <Route exact path="/">
-            <CardsListing contacts={filteredContacts} addSampleData={addSampleData}  />
+            <CardsListing searchTerm={searchTerm} contacts={filteredContacts} addSampleData={addSampleData}  />
           </Route>
           <Route exact path="/details/:id">
             <ContactDetails setContactState={setContactState} contacts={filteredContacts} />
