@@ -16,7 +16,7 @@ const PreviewCard = ({info}) => {
             <div className={styles.divider_decoration} />  
             <div className={styles.content_section}>
                 <h1>{info.name}</h1>
-                <p>{info.details}</p>
+                <p>{info.reasonForKnowing}</p>
                 <Link style={{color: '#34b7eb'}} to={`/details/${info.id}`}>
                     <p>Details</p>
                 </Link>

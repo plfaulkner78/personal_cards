@@ -6,28 +6,12 @@ import CardsListing from "./components/CardsListing";
 import ContactDetails from "./components/ContactDetails";
 import NewContact from "./components/NewContact";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
-
-const testArr = [
-  {"name": "Steve Jobs", "details": "zookeeper", id: 1},
-  {"name": "Jane Jackson", "details": "lawyer", id: 2},
-  {"name": "Jane", "details": "lawyer", id: 3},
-  {"name": "Jane", "details": "lawyer", id: 4},
-  {"name": "Jane", "details": "lawyer", id: 5},
-  {"name": "Jane", "details": "lawyer", id: 6},
-  {"name": "Jane", "details": "lawyer", id: 7},
-  {"name": "Jane", "details": "lawyer", id: 8},
-  {"name": "Jane", "details": "lawyer", id: 9},
-  {"name": "Jane", "details": "lawyer", id: 10},
-  {"name": "Jane", "details": "lawyer", id: 11},
-  {"name": "Jane", "details": "lawyer", id: 12},
-  {"name": "Jane", "details": "lawyer", id: 13},
-  {"name": "Jane", "details": "lawyer", id: 14},
-  {"name": "Jane", "details": "lawyer", id: 15},
-];
+import {sampleArr} from "./sampleData";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [contacts, setContacts] = useState(testArr);
+  const [contacts, setContacts] = useState(sampleArr);
+  // const [contacts, setContacts] = useState([]);
 
   // Here is how you'll search and sort:
   // 1. Get data in a useEffect. You'll only do this once.
@@ -35,13 +19,22 @@ function App() {
   // 3. When a search term is changed, you'll filter but DO NOT updated contact state.
 
   // useEffect(() => {
-  //   fetch from the API endpoint
+  //   
   // }, []);
 
+  function addSampleData() {
+    setContacts(sampleArr);
+  }
+
+  function handleNewContactAdd(contactInfo) {
+    let copy = [...contacts, contactInfo];
+    setContacts(copy);
+  }
 
   function handleSearchInputChange(e) {
     setSearchTerm(e.target.value);
   }
+
 
   const filteredContacts = contacts.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
@@ -51,13 +44,13 @@ function App() {
         <Navbar onSearchInputChange={handleSearchInputChange} />
         <Switch>
           <Route exact path="/">
-            <CardsListing contacts={filteredContacts}  />
+            <CardsListing contacts={filteredContacts} addSampleData={addSampleData}  />
           </Route>
           <Route exact path="/details/:id">
             <ContactDetails contacts={filteredContacts} />
           </Route>
           <Route exact path="/newContact">
-            <NewContact />
+            <NewContact onNewContactAdd={handleNewContactAdd} />
           </Route>
           <Route>
             <h1>404 Error</h1>

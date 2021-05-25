@@ -4,7 +4,7 @@ import { TextInputField, Avatar, Button, Pane, Label, Textarea } from 'evergreen
 import styles from "./styles/NewEditContact.module.css";
 import DefaultAvatar from '../images/defaultAvatar.jpeg';
 
-const NewContact = () => {
+const NewContact = ({onNewContactAdd}) => {
     const [name, setName] = useState('');
     const [reasonForKnowing, setReasonForKnowing] = useState('');
     const [education, setEducation] = useState('');
@@ -19,10 +19,15 @@ const NewContact = () => {
 
     function handleFormSubmit(e) {
         e.preventDefault();
+
+        let id = Date.now() + "_" + name.split(' ').join('_');
         let contactInfo = {
-            name, reasonForKnowing, education, work, hometown, birthday, interests, mutualFriends, additionalInfo
+            name, reasonForKnowing, education, work, hometown, birthday, interests, mutualFriends, additionalInfo,
+            createdAt: Date.now(), id
         }
-        console.log(contactInfo);
+
+        onNewContactAdd(contactInfo);
+
         history.push('/');
         window.scrollTo(0, 0);
     }
