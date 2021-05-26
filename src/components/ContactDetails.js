@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import styles from "./styles/NewEditContact.module.css";
-import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner } from 'evergreen-ui';
+import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner, SelectMenu } from 'evergreen-ui';
 
 const ContactDetails = ({contacts, setContactState}) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -13,10 +13,13 @@ const ContactDetails = ({contacts, setContactState}) => {
     const [education, setEducation] = useState('');
     const [work, setWork] = useState('');
     const [hometown, setHometown] = useState('');
-    const [birthday, setBirthday] = useState('');
+    const [birthMonth, setBirthMonth] = useState('');
+    const [birthDate, setBirthDate] = useState('');
     const [interests, setInterests] = useState('');
     const [mutualFriends, setMutualFriends] = useState('');
     const [additionalInfo, setAdditionalInfo] = useState('');
+
+    const [dateOptionsArr, setDateOptionsArr] = useState([]);
 
     const params = useParams();
     const history = useHistory();
@@ -37,13 +40,21 @@ const ContactDetails = ({contacts, setContactState}) => {
         }
     }, []);
 
+    // Whenever birthMonth changes, set the dateOptions for that unique month
+    // e.g. when user selects February, set dateOptions to an array of ints from 1-29
+    useEffect(() => {
+        let rangeArr = [...Array(days_in_months[birthMonth]).keys()].map(x => ++x);
+        setDateOptionsArr(rangeArr);
+    }, [birthMonth]);
+
     function setStateFromContact(contact_obj) {
         setName(contact_obj.name);
         setReasonForKnowing(contact_obj.reasonForKnowing);
         setEducation(contact_obj.education);
         setWork(contact_obj.work);
         setHometown(contact_obj.hometown);
-        setBirthday(contact_obj.birthday);
+        setBirthMonth(contact_obj.birthMonth);
+        setBirthDate(contact_obj.birthDate);
         setInterests(contact_obj.interests);
         setMutualFriends(contact_obj.mutualFriends);
         setAdditionalInfo(contact_obj.additionalInfo);
@@ -62,7 +73,8 @@ const ContactDetails = ({contacts, setContactState}) => {
             education, 
             work, 
             hometown, 
-            birthday, 
+            birthMonth,
+            birthDate, 
             interests, 
             mutualFriends, 
             additionalInfo
@@ -83,6 +95,21 @@ const ContactDetails = ({contacts, setContactState}) => {
         setIsEditing(false);
         window.scrollTo(0, 0);
     }
+
+    const days_in_months = {
+        "January": 31,
+        "February": 29,
+        "March": 31,
+        "April": 30,
+        "May": 31,
+        "June": 30,
+        "July": 31,
+        "August": 31,
+        "September": 30,
+        "October": 31,
+        "November": 30,
+        "December": 31
+    };
 
     return (
         <div className={styles.content_container}>
@@ -119,8 +146,35 @@ const ContactDetails = ({contacts, setContactState}) => {
                             disabled={!isEditing}
                             width="50vh"
                         />
-                        {/* TODO: fix the datepicker below so it only show the month and day, not the year */}
-                        <TextInputField
+
+                        <label className={styles.birthday_label}>Birthday</label>
+                        <div className={styles.birthday_container}>
+                            <div>
+                                <SelectMenu
+                                    title="Select month"
+                                    options={Object.keys(days_in_months).map((label) => ({ label, value: label }))}
+                                    selected={birthMonth}
+                                    onSelect={(item) => {
+                                        setBirthMonth(item.value);
+                                        setBirthDate('');
+                                    }}
+                                >
+                                    <Button disabled={!isEditing}>{birthMonth || "Select month..."}</Button>
+                                </SelectMenu>
+                            </div>
+                            <div className={styles.birthDateInput}>
+                                <SelectMenu
+                                    title="Select date"
+                                    options={dateOptionsArr.map((label) => ({ label, value: label }))}
+                                    selected={birthDate}
+                                    onSelect={(item) => setBirthDate(item.value)}
+                                >
+                                    <Button disabled={birthMonth === "" || !isEditing}>{birthDate || "Select date..."}</Button>
+                                </SelectMenu>
+                            </div>
+                        </div>
+                        
+                        {/* <TextInputField
                             label="Birthday"
                             placeholder="When is their birthday?"
                             value={birthday}
@@ -128,7 +182,8 @@ const ContactDetails = ({contacts, setContactState}) => {
                             width="50vh"
                             disabled={!isEditing}
                             type="date"
-                        />
+                        /> */}
+
                         <TextInputField
                             label="Hometown"
                             placeholder="Where are they from?"

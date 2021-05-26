@@ -40,7 +40,7 @@ const NewContact = ({onNewContactAdd}) => {
     useEffect(() => {
         let rangeArr = [...Array(days_in_months[birthMonth]).keys()].map(x => ++x);
         setDateOptionsArr(rangeArr);
-    }, [birthMonth])
+    }, [birthMonth]);
 
     // Need this mapping so I know how many days to display in the dates select menu
     const days_in_months = {
@@ -91,7 +91,10 @@ const NewContact = ({onNewContactAdd}) => {
                                 title="Select month"
                                 options={Object.keys(days_in_months).map((label) => ({ label, value: label }))}
                                 selected={birthMonth}
-                                onSelect={(item) => setBirthMonth(item.value)}
+                                onSelect={(item) => {
+                                    setBirthDate('');
+                                    setBirthMonth(item.value);
+                                }}
                             >
                                 <Button>{birthMonth || "Select month..."}</Button>
                             </SelectMenu>
