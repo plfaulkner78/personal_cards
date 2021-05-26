@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useHistory} from "react-router-dom";
-import { TextInputField, Avatar, Button, Pane, Label, Textarea, SelectMenu } from 'evergreen-ui';
+import { TextInputField, Avatar, Button, Pane, Label, Textarea, SelectMenu, DeleteIcon, Tooltip } from 'evergreen-ui';
 import styles from "./styles/NewEditContact.module.css";
 import DefaultAvatar from '../images/defaultAvatar.jpeg';
 
@@ -17,10 +17,20 @@ const NewContact = ({onNewContactAdd}) => {
     const [additionalInfo, setAdditionalInfo] = useState('');
     
     const [dateOptionsArr, setDateOptionsArr] = useState([]);
-    
-    const history = useHistory();
 
-    function handleFormSubmit() {
+    const [birthDayError, setBirthDayError] = useState(false);
+     
+    const history = useHistory();
+    const birthdayRef = useRef();
+
+    function handleFormSubmit(e) {
+        e.preventDefault();
+
+        if (birthMonth !== "" && birthDate === "") {
+            setBirthDayError(true);
+            birthdayRef.current.scrollIntoView();
+            return;
+        }
 
         let contactInfo = {
             name, reasonForKnowing, education, work, hometown, birthMonth, birthDate, interests, mutualFriends, 
@@ -65,7 +75,7 @@ const NewContact = ({onNewContactAdd}) => {
                     <Avatar className={styles.avatar} name={name} size={150} color='green' marginRight={16} />
                     ) : (<Avatar className={styles.avatar} src={DefaultAvatar} size={150} marginRight={16} />)}
             </div>
-            <div className={styles.form_container}>
+            <form className={styles.form_container} onSubmit={handleFormSubmit}>
                 <div className={styles.contact_form}>
                     <h1>New Contact</h1>
                     <TextInputField
@@ -83,9 +93,10 @@ const NewContact = ({onNewContactAdd}) => {
                         width="50vh"
                         onChange={e => setReasonForKnowing(e.target.value)}
                     />
+
                     {/* TODO: style these SelectMenu components better, fix bottom margins */}
                     <label className={styles.birthday_label}>Birthday</label>
-                    <div className={styles.birthday_container}>
+                    <div ref={birthdayRef} className={styles.birthday_container}>
                         <div>
                             <SelectMenu
                                 title="Select month"
@@ -96,18 +107,38 @@ const NewContact = ({onNewContactAdd}) => {
                                     setBirthMonth(item.value);
                                 }}
                             >
-                                <Button>{birthMonth || "Select month..."}</Button>
+                                <Button type="button">{birthMonth || "Select month..."}</Button>
                             </SelectMenu>
                         </div>
                         <div className={styles.birthDateInput}>
                             <SelectMenu
                                 title="Select date"
+                                required
                                 options={dateOptionsArr.map((label) => ({ label, value: label }))}
                                 selected={birthDate}
-                                onSelect={(item) => setBirthDate(item.value)}
-                            >
-                                <Button disabled={birthMonth === ""}>{birthDate || "Select date..."}</Button>
+                                onSelect={(item) => {
+                                    setBirthDate(item.value);
+                                    setBirthDayError(false);
+                                }}
+                            >   
+                                <Tooltip content="Choose a date or remove birthday" isShown={birthDayError}>
+                                    <Button type="button" disabled={birthMonth === ""}>{birthDate || "Select date..."}</Button>
+                                </Tooltip>
                             </SelectMenu>
+                        </div>
+                        <div className={styles.delete_icon_container}>
+                            {birthMonth && (
+                                <Tooltip position="right" content="Remove birthday">
+                                    <DeleteIcon
+                                        color="#101840"
+                                        onClick={() => {
+                                            setBirthDayError(false);
+                                            setBirthDate('');
+                                            setBirthMonth('');
+                                        }}
+                                    />
+                                </Tooltip>
+                            )}
                         </div>
                     </div>
 
@@ -157,7 +188,7 @@ const NewContact = ({onNewContactAdd}) => {
                     </Pane>
                     {/* TODO: restyle the Button better so it's not absolute positioning */}
                     <Button
-                        onClick={handleFormSubmit}
+                        type="submit"
                         className={styles.create_btn} 
                         marginRight={16} 
                         appearance="primary" 
@@ -165,7 +196,7 @@ const NewContact = ({onNewContactAdd}) => {
                         //isLoading={true}
                     >Create</Button>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }

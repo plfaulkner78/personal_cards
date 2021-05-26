@@ -55,5 +55,15 @@
     font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 .birthDateInput {
-    margin-left: 10%
+    margin-left: 10%;
+}
+.delete_icon_container {
+    /* background-color: chocolate; */
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+}
+.delete_icon_container:hover {
+    cursor: pointer;
 }

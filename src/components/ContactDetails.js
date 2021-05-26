@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import styles from "./styles/NewEditContact.module.css";
-import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner, SelectMenu } from 'evergreen-ui';
+import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner, SelectMenu, Tooltip, DeleteIcon } from 'evergreen-ui';
 
 const ContactDetails = ({contacts, setContactState}) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -60,12 +60,15 @@ const ContactDetails = ({contacts, setContactState}) => {
         setAdditionalInfo(contact_obj.additionalInfo);
     }
 
-    function handleCancel() {
+    function handleCancel(e) {
+        e.preventDefault();
         setIsEditing(false);
         setStateFromContact(contact);
     }
 
-    function handleSaveChanges() {
+    function handleSaveChanges(e) {
+        e.preventDefault();
+        
         let updatedContact = {
             ...contact, 
             name, 
@@ -121,13 +124,16 @@ const ContactDetails = ({contacts, setContactState}) => {
                 <div className={styles.avatar_container}>
                     <Avatar className={styles.avatar} name={contact.name} size={150} marginRight={16} />
                 </div>
-                <div className={styles.form_container}>
+                <form className={styles.form_container} onSubmit={handleSaveChanges}>
                     <div className={styles.contact_form}>
                         <div className={styles.title_button_container}>
                             <h1>{contact.name}</h1>
                             {isEditing ? (
                                 <Button onClick={handleCancel}>Cancel</Button>
-                            ) : <Button onClick={() => setIsEditing(true)}>Edit</Button>}
+                            ) : <Button onClick={(e) => {
+                                    e.preventDefault();
+                                    setIsEditing(true);
+                                }}>Edit</Button>}
                         </div>
                         <TextInputField
                             label="Name"
@@ -159,7 +165,9 @@ const ContactDetails = ({contacts, setContactState}) => {
                                         setBirthDate('');
                                     }}
                                 >
-                                    <Button disabled={!isEditing}>{birthMonth || "Select month..."}</Button>
+                                    <Button type="button" disabled={!isEditing}>
+                                        {birthMonth || "Select month..."}
+                                    </Button>
                                 </SelectMenu>
                             </div>
                             <div className={styles.birthDateInput}>
@@ -169,20 +177,25 @@ const ContactDetails = ({contacts, setContactState}) => {
                                     selected={birthDate}
                                     onSelect={(item) => setBirthDate(item.value)}
                                 >
-                                    <Button disabled={birthMonth === "" || !isEditing}>{birthDate || "Select date..."}</Button>
+                                    <Button type="button" disabled={birthMonth === "" || !isEditing}>
+                                        {birthDate || "Select date..."}
+                                    </Button>
                                 </SelectMenu>
                             </div>
+                            <div className={styles.delete_icon_container}>
+                                {(birthMonth && isEditing) && (
+                                    <Tooltip content="Remove birthday">
+                                        <DeleteIcon
+                                            color="#101840"
+                                            onClick={() => {
+                                                setBirthDate('');
+                                                setBirthMonth('');
+                                            }}
+                                        />
+                                    </Tooltip>
+                                )}
+                            </div>
                         </div>
-                        
-                        {/* <TextInputField
-                            label="Birthday"
-                            placeholder="When is their birthday?"
-                            value={birthday}
-                            onChange={e => setBirthday(e.target.value)}
-                            width="50vh"
-                            disabled={!isEditing}
-                            type="date"
-                        /> */}
 
                         <TextInputField
                             label="Hometown"
@@ -239,10 +252,10 @@ const ContactDetails = ({contacts, setContactState}) => {
                             marginRight={16} 
                             appearance="primary" 
                             intent="success"
-                            onClick={handleSaveChanges}
+                            type="submit"
                         >Save Changes</Button>
                     </div>
-                </div>
+                </form>
                 </>
             )}
         </div>
