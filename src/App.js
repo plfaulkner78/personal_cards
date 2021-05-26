@@ -20,19 +20,9 @@ function App() {
   // 3. When a search term is changed, you'll filter but DO NOT updated contact state.
 
   useEffect(() => {
-    // TODO: figure out the default
     sortAlphabetically();
 
-    var now = moment();
-    var interest = moment("05-01");
-    var interest_1 = moment("06-01");
-    console.log(now);
-    console.log(interest);
-    // console.log(now.diff(interest, "day"));
-    console.log(interest.diff(now, "day"));
-    console.log(interest_1.diff(now, "day"));
-    // console.log(new Date() - new Date("05-01"));
-    // console.log(new Date() - new Date("06-01"));
+    
   }, []);
 
   function sortAlphabetically() {
@@ -61,23 +51,23 @@ function App() {
 
   // TODO: need to finish; must compare it to current date and see which has the shortest distance
   function sortByBirthday() {
-    let copy = [...contacts];
+    // let copy = [...contacts];
 
-    let now = moment();
+    // let now = moment();
 
-    copy.sort(function(a, b) {
-      let a_diff = now.diff(moment(a.birthday), "day");
-      let b_diff = now.diff(moment(b.birthday), "day");
+    // copy.sort(function(a, b) {
+    //   let a_diff = now.diff(moment(a.birthday), "day");
+    //   let b_diff = now.diff(moment(b.birthday), "day");
       
-      if (a_diff > b_diff) {
-        return -1;
-      } else if (a_diff < b_diff) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    setContacts(copy);
+    //   if (a_diff > b_diff) {
+    //     return -1;
+    //   } else if (a_diff < b_diff) {
+    //     return 1;
+    //   } else {
+    //     return 0;
+    //   }
+    // });
+    // setContacts(copy);
   }
 
   function addSampleData() {

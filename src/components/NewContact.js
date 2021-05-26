@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from "react-router-dom";
-import { TextInputField, Avatar, Button, Pane, Label, Textarea } from 'evergreen-ui';
+import { TextInputField, Avatar, Button, Pane, Label, Textarea, SelectMenu } from 'evergreen-ui';
 import styles from "./styles/NewEditContact.module.css";
 import DefaultAvatar from '../images/defaultAvatar.jpeg';
 
@@ -10,27 +10,53 @@ const NewContact = ({onNewContactAdd}) => {
     const [education, setEducation] = useState('');
     const [work, setWork] = useState('');
     const [hometown, setHometown] = useState('');
-    const [birthday, setBirthday] = useState('mm/dd/----');
+    const [birthMonth, setBirthMonth] = useState('');
+    const [birthDate, setBirthDate] = useState('');
     const [interests, setInterests] = useState('');
     const [mutualFriends, setMutualFriends] = useState('');
     const [additionalInfo, setAdditionalInfo] = useState('');
-
+    
+    const [dateOptionsArr, setDateOptionsArr] = useState([]);
+    
     const history = useHistory();
 
-    function handleFormSubmit(e) {
-        e.preventDefault();
+    function handleFormSubmit() {
 
         let contactInfo = {
-            name, reasonForKnowing, education, work, hometown, birthday, interests, mutualFriends, additionalInfo,
-            createdAt: Date.now(), id: `${Date.now()}_${Math.floor(Math.random() * 100)}`
+            name, reasonForKnowing, education, work, hometown, birthMonth, birthDate, interests, mutualFriends, 
+            additionalInfo, createdAt: Date.now(), id: `${Date.now()}_${Math.floor(Math.random() * 100)}`
         }
 
         onNewContactAdd(contactInfo);
-        console.log(contactInfo);
+
+        console.log("Newly created contact: ", contactInfo);
 
         history.push('/');
         window.scrollTo(0, 0);
     }
+
+    // Whenever birthMonth changes, set the dateOptions for that unique month
+    // e.g. when user selects February, set dateOptions to an array of ints from 1-29
+    useEffect(() => {
+        let rangeArr = [...Array(days_in_months[birthMonth]).keys()].map(x => ++x);
+        setDateOptionsArr(rangeArr);
+    }, [birthMonth])
+
+    // Need this mapping so I know how many days to display in the dates select menu
+    const days_in_months = {
+        "January": 31,
+        "February": 29,
+        "March": 31,
+        "April": 30,
+        "May": 31,
+        "June": 30,
+        "July": 31,
+        "August": 31,
+        "September": 30,
+        "October": 31,
+        "November": 30,
+        "December": 31
+    };
 
     return (
         <div className={styles.content_container}>
@@ -40,7 +66,7 @@ const NewContact = ({onNewContactAdd}) => {
                     ) : (<Avatar className={styles.avatar} src={DefaultAvatar} size={150} marginRight={16} />)}
             </div>
             <div className={styles.form_container}>
-                <form className={styles.contact_form} onSubmit={handleFormSubmit}>
+                <div className={styles.contact_form}>
                     <h1>New Contact</h1>
                     <TextInputField
                         label="Name"
@@ -57,15 +83,31 @@ const NewContact = ({onNewContactAdd}) => {
                         width="50vh"
                         onChange={e => setReasonForKnowing(e.target.value)}
                     />
-                    {/* TODO: fix the datepicker below so it only show the month and day, not the year */}
-                    <TextInputField
-                        label="Birthday"
-                        placeholder="When is their birthday?"
-                        value={birthday}
-                        width="50vh"
-                        type="date"
-                        onChange={e => setBirthday(e.target.value)}
-                    />
+                    {/* TODO: style these SelectMenu components better, fix bottom margins */}
+                    <label className={styles.birthday_label}>Birthday</label>
+                    <div className={styles.birthday_container}>
+                        <div>
+                            <SelectMenu
+                                title="Select month"
+                                options={Object.keys(days_in_months).map((label) => ({ label, value: label }))}
+                                selected={birthMonth}
+                                onSelect={(item) => setBirthMonth(item.value)}
+                            >
+                                <Button>{birthMonth || "Select month..."}</Button>
+                            </SelectMenu>
+                        </div>
+                        <div className={styles.birthDateInput}>
+                            <SelectMenu
+                                title="Select date"
+                                options={dateOptionsArr.map((label) => ({ label, value: label }))}
+                                selected={birthDate}
+                                onSelect={(item) => setBirthDate(item.value)}
+                            >
+                                <Button disabled={birthMonth === ""}>{birthDate || "Select date..."}</Button>
+                            </SelectMenu>
+                        </div>
+                    </div>
+
                     <TextInputField
                         label="Hometown"
                         placeholder="Where are they from?"
@@ -112,14 +154,14 @@ const NewContact = ({onNewContactAdd}) => {
                     </Pane>
                     {/* TODO: restyle the Button better so it's not absolute positioning */}
                     <Button
-                        type="submit"
+                        onClick={handleFormSubmit}
                         className={styles.create_btn} 
                         marginRight={16} 
                         appearance="primary" 
                         intent="success"
                         //isLoading={true}
                     >Create</Button>
-                </form>
+                </div>
             </div>
         </div>
     )

@@ -9,9 +9,9 @@ const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, 
 
     function handleTabSelect(index) {
         setSelectedIndex(index)
-        if (index == 0) {
+        if (index === 0) {
             sortAlphabetically();
-        } else if (index == 1) {
+        } else if (index === 1) {
             sortByDate();
         } else {
             sortByBirthday()
@@ -43,7 +43,7 @@ const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, 
                     contacts.map(item => <PreviewCard info={item} key={item.id} />)
                 ) : (<>
                     {/* TODO: style this better */}
-                    {searchTerm.length == 0 ? (<>
+                    {searchTerm.length === 0 ? (<>
                         <h1>You don't have any contacts!</h1>
                         <h2>Add contacts to get started</h2>
                         <h2>Or click below to generate sample data.</h2>

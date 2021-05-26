@@ -70,7 +70,7 @@ const ContactDetails = ({contacts, setContactState}) => {
 
         // Update the contacts state array
         let newContactArr = contacts.map(item => {
-            if (item.id == updatedContact.id) {
+            if (item.id === updatedContact.id) {
                 return updatedContact;
             } else {
                 return item
