@@ -97,7 +97,7 @@ const ContactDetails = ({contacts, setContactState}) => {
                 <div className={styles.form_container}>
                     <div className={styles.contact_form}>
                         <div className={styles.title_button_container}>
-                            <h1>New Contact</h1>
+                            <h1>{contact.name}</h1>
                             {isEditing ? (
                                 <Button onClick={handleCancel}>Cancel</Button>
                             ) : <Button onClick={() => setIsEditing(true)}>Edit</Button>}

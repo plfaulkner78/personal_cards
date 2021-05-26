@@ -1,12 +1,44 @@
+import {useState} from "react";
 import styles from "./styles/CardsListing.module.css";
 import PreviewCard from "./PreviewCard";
-import { Button } from 'evergreen-ui';
+import { Button, Tablist, Tab } from 'evergreen-ui';
 
-const CardsListing = ({contacts, addSampleData, searchTerm}) => {
+const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, sortByDate, sortByBirthday}) => {
+    const [selectedIndex, setSelectedIndex] = useState(0)
+    const tabs = ['Alphabetical', 'Most Recent', 'Soonest Birthday']
+
+    function handleTabSelect(index) {
+        setSelectedIndex(index)
+        if (index == 0) {
+            sortAlphabetically();
+        } else if (index == 1) {
+            sortByDate();
+        } else {
+            sortByBirthday()
+        }
+    }
+
     return (
         <div className={styles.content_container}>
-            <h1>Sort by section</h1>
             <div className={styles.list_container}>
+                <div className={styles.sort_container}>
+                    <h2>Sort by: </h2>
+                    <div className={styles.tabs_container}>
+                        <Tablist>
+                            {tabs.map((tab, index) => (
+                                <Tab
+                                    key={tab}
+                                    id={tab}
+                                    onSelect={() => handleTabSelect(index)}
+                                    isSelected={index === selectedIndex}
+                                    aria-controls={`panel-${tab}`}
+                                >
+                                    {tab}
+                                </Tab>
+                            ))}
+                        </Tablist>
+                    </div>
+                </div>
                 {contacts.length > 0 ? (
                     contacts.map(item => <PreviewCard info={item} key={item.id} />)
                 ) : (<>

@@ -26,6 +26,7 @@ const NewContact = ({onNewContactAdd}) => {
         }
 
         onNewContactAdd(contactInfo);
+        console.log(contactInfo);
 
         history.push('/');
         window.scrollTo(0, 0);
