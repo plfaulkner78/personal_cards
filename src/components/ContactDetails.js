@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import styles from "./styles/NewEditContact.module.css";
 import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner, SelectMenu, Tooltip, DeleteIcon } from 'evergreen-ui';
@@ -20,9 +20,12 @@ const ContactDetails = ({contacts, setContactState}) => {
     const [additionalInfo, setAdditionalInfo] = useState('');
 
     const [dateOptionsArr, setDateOptionsArr] = useState([]);
+    
+    const [birthDayError, setBirthDayError] = useState(false);
 
     const params = useParams();
     const history = useHistory();
+    const birthdayRef = useRef();
 
     useEffect(() => {
         let filtered_contact = contacts.filter(item => item.id == params.id)[0];
@@ -62,13 +65,21 @@ const ContactDetails = ({contacts, setContactState}) => {
 
     function handleCancel(e) {
         e.preventDefault();
+        setBirthDayError(false);
         setIsEditing(false);
         setStateFromContact(contact);
     }
 
     function handleSaveChanges(e) {
         e.preventDefault();
-        
+
+        // If you entered a birthMonth but not a date, you won't be able to submit
+        if (birthMonth !== "" && birthDate === "") {
+            setBirthDayError(true);
+            birthdayRef.current.scrollIntoView();
+            return;
+        }
+
         let updatedContact = {
             ...contact, 
             name, 
@@ -153,8 +164,9 @@ const ContactDetails = ({contacts, setContactState}) => {
                             width="50vh"
                         />
 
+                        {/* TODO: style these SelectMenu components better, fix bottom margins */}
                         <label className={styles.birthday_label}>Birthday</label>
-                        <div className={styles.birthday_container}>
+                        <div ref={birthdayRef} className={styles.birthday_container}>
                             <div>
                                 <SelectMenu
                                     title="Select month"
@@ -163,6 +175,7 @@ const ContactDetails = ({contacts, setContactState}) => {
                                     onSelect={(item) => {
                                         setBirthMonth(item.value);
                                         setBirthDate('');
+                                        setBirthDayError(false);
                                     }}
                                 >
                                     <Button type="button" disabled={!isEditing}>
@@ -175,16 +188,21 @@ const ContactDetails = ({contacts, setContactState}) => {
                                     title="Select date"
                                     options={dateOptionsArr.map((label) => ({ label, value: label }))}
                                     selected={birthDate}
-                                    onSelect={(item) => setBirthDate(item.value)}
+                                    onSelect={(item) => {
+                                        setBirthDate(item.value);
+                                        setBirthDayError(false);
+                                    }}
                                 >
-                                    <Button type="button" disabled={birthMonth === "" || !isEditing}>
-                                        {birthDate || "Select date..."}
-                                    </Button>
+                                    <Tooltip content="Choose a date or remove birthday" isShown={birthDayError}>
+                                        <Button type="button" disabled={birthMonth === "" || !isEditing}>
+                                            {birthDate || "Select date..."}
+                                        </Button>
+                                    </Tooltip>
                                 </SelectMenu>
                             </div>
                             <div className={styles.delete_icon_container}>
                                 {(birthMonth && isEditing) && (
-                                    <Tooltip content="Remove birthday">
+                                    <Tooltip position="right" content="Remove birthday">
                                         <DeleteIcon
                                             color="#101840"
                                             onClick={() => {

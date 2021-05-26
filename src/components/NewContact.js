@@ -26,6 +26,7 @@ const NewContact = ({onNewContactAdd}) => {
     function handleFormSubmit(e) {
         e.preventDefault();
 
+        // If you entered a birthMonth but not a date, you won't be able to submit
         if (birthMonth !== "" && birthDate === "") {
             setBirthDayError(true);
             birthdayRef.current.scrollIntoView();
@@ -105,9 +106,12 @@ const NewContact = ({onNewContactAdd}) => {
                                 onSelect={(item) => {
                                     setBirthDate('');
                                     setBirthMonth(item.value);
+                                    setBirthDayError(false);
                                 }}
                             >
-                                <Button type="button">{birthMonth || "Select month..."}</Button>
+                                <Button type="button">
+                                    {birthMonth || "Select month..."}
+                                </Button>
                             </SelectMenu>
                         </div>
                         <div className={styles.birthDateInput}>
@@ -122,7 +126,9 @@ const NewContact = ({onNewContactAdd}) => {
                                 }}
                             >   
                                 <Tooltip content="Choose a date or remove birthday" isShown={birthDayError}>
-                                    <Button type="button" disabled={birthMonth === ""}>{birthDate || "Select date..."}</Button>
+                                    <Button type="button" disabled={birthMonth === ""}>
+                                        {birthDate || "Select date..."}
+                                    </Button>
                                 </Tooltip>
                             </SelectMenu>
                         </div>
