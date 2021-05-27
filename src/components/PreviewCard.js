@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from "./styles/PreviewCard.module.css";
 import {Link} from "react-router-dom";
-import { Avatar } from 'evergreen-ui';
-
-// TODO: still need to figure out what to display in details
-// perhaps I could make a field called knowFrom which would tell you where you know this
-// person from or what their relevance is if necessary (i.e. wouldn't be necessary for a good friend)
+import { Avatar, Tooltip } from 'evergreen-ui';
+import GreenCake from '../images/green_cake.png';
+import moment from 'moment';
 
 const PreviewCard = ({info}) => {
+
+    const todayMonth = moment().format("MMMM");
+    const todayDate = parseInt(moment().format("DD"));
+
     return (
         <div className={styles.card_container}>
             <div className={styles.avatar_section}>
@@ -21,6 +23,13 @@ const PreviewCard = ({info}) => {
                     <p>Details</p>
                 </Link>
             </div>
+            {(todayMonth === info.birthMonth && todayDate === info.birthDate) && (
+                <div className={styles.birthday_icon_container}>
+                    <Tooltip content={`It's ${info.name}'s birthday today!`}>
+                        <img className={styles.cake_icon} src={GreenCake} />
+                    </Tooltip>
+                </div>
+            )}
         </div>
     )
 }

@@ -15,14 +15,12 @@ function App() {
   // const [contacts, setContacts] = useState([]);
 
   // Here is how you'll search and sort:
-  // 1. Get data in a useEffect. You'll only do this once.
+  // 1. Sort data initially in a useEffect. (normally you'd read from a database at this point)
   // 2. When a search button is pressed, you will sort and update contact state.
   // 3. When a search term is changed, you'll filter but DO NOT updated contact state.
 
   useEffect(() => {
     sortAlphabetically();
-
-    
   }, []);
 
   function sortAlphabetically() {

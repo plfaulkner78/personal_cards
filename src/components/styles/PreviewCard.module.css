@@ -26,3 +26,14 @@
     text-align: center;
     /* background-color: red; */
 }
+.birthday_icon_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    /* background-color: red; */
+}
+.cake_icon {
+    width: 50%;
+    /* background-color: salmon; */
+}
