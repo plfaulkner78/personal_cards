@@ -49,25 +49,73 @@ function App() {
     setContacts(copy);
   }
 
-  // TODO: need to finish; must compare it to current date and see which has the shortest distance
+  const month_to_index = {
+    "January": 0,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12
+  };
+  
+  function month_date_diff(compareMonth, compareDate) {
+    // Function returns the difference in milliseconds between two dates.
+    // This is used in the sorting function to determine which dates are 
+    // closest to the current date.
+
+    let now = moment();
+
+    // Get current month, date, and year as ints
+    let [currentMonth, currentDate, currentYear] = now.format("M D YYYY").split(" ").map(num => parseInt(num));
+
+    if (compareMonth < currentMonth) {
+      // If the month has already passed this year, compare today to next year's birthday
+      let nextBirthday = moment([currentYear + 1, compareMonth, compareDate]);
+      return nextBirthday.diff(now);
+    } else if (compareMonth === currentMonth) {
+      // If today's month and the birthday month are the same...
+      if (compareDate > currentDate) {
+        // Birthday is this month, but hasn't happened yet
+        let nextBirthday = moment([currentYear, compareMonth, compareDate]);
+        return nextBirthday.diff(now);
+      } else if (compareDate < currentDate) {
+        // Birthday was this month, but already passed
+        let nextBirthday = moment([currentYear + 1, compareMonth, compareDate]);
+        return nextBirthday.diff(now);
+      } else {
+        // If the dates and months are equal, then today is the birthday!
+        return 0;
+      }
+    } else {
+      // The birthday month hasn't happened yet this year, so the birthday hasn't happened
+      let nextBirthday = moment([currentYear, compareMonth, compareDate]);
+      return nextBirthday.diff(now);
+    }
+  }
+
   function sortByBirthday() {
-    // let copy = [...contacts];
+    let copy = [...contacts];
 
-    // let now = moment();
-
-    // copy.sort(function(a, b) {
-    //   let a_diff = now.diff(moment(a.birthday), "day");
-    //   let b_diff = now.diff(moment(b.birthday), "day");
+    copy.sort(function(a, b) {
+      let a_diff = month_date_diff(month_to_index[a.birthMonth], a.birthDate);
+      let b_diff = month_date_diff(month_to_index[b.birthMonth], b.birthDate);
       
-    //   if (a_diff > b_diff) {
-    //     return -1;
-    //   } else if (a_diff < b_diff) {
-    //     return 1;
-    //   } else {
-    //     return 0;
-    //   }
-    // });
-    // setContacts(copy);
+      if (a_diff < b_diff) {
+        return -1;
+      } else if (a_diff > b_diff) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    setContacts(copy);
   }
 
   function addSampleData() {
