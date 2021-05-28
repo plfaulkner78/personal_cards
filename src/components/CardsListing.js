@@ -4,8 +4,8 @@ import PreviewCard from "./PreviewCard";
 import { Button, Tablist, Tab } from 'evergreen-ui';
 
 const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, sortByDate, sortByBirthday}) => {
-    const [selectedIndex, setSelectedIndex] = useState(0)
-    const tabs = ['Alphabetical', 'Most Recent', 'Soonest Birthday']
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const tabs = ['Alphabetical', 'Most Recent', 'Soonest Birthday'];
 
     function handleTabSelect(index) {
         setSelectedIndex(index)

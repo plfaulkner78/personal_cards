@@ -1,7 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import styles from "./styles/NewEditContact.module.css";
-import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner, SelectMenu, Tooltip, DeleteIcon } from 'evergreen-ui';
+import { TextInputField, Avatar, Button, Pane, Label, Textarea, Spinner, 
+        SelectMenu, Tooltip, DeleteIcon, toaster, Dialog } from 'evergreen-ui';
 
 const ContactDetails = ({contacts, setContactState}) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -22,6 +23,7 @@ const ContactDetails = ({contacts, setContactState}) => {
     const [dateOptionsArr, setDateOptionsArr] = useState([]);
     
     const [birthDayError, setBirthDayError] = useState(false);
+    const [deleteConfirmationShown, setDeleteConfirmationShown] = useState(false);
 
     const params = useParams();
     const history = useHistory();
@@ -108,6 +110,14 @@ const ContactDetails = ({contacts, setContactState}) => {
 
         setIsEditing(false);
         window.scrollTo(0, 0);
+    }
+
+    function handleDelete() {
+        let copy = contacts.filter(item => item.id !== contact.id);
+        setContactState(copy);
+        history.push('/');
+        window.scrollTo(0, 0);
+        toaster.notify('Contact successfully deleted.')
     }
 
     const days_in_months = {
@@ -266,12 +276,36 @@ const ContactDetails = ({contacts, setContactState}) => {
                             />
                         </Pane>
                         {/* TODO: restyle the Button better so it's not absolute positioning */}
-                        <Button
-                            marginRight={16} 
-                            appearance="primary" 
-                            intent="success"
-                            type="submit"
-                        >Save Changes</Button>
+                        {isEditing ? (
+                            <Button appearance="primary" intent="success" type="submit">
+                                Save Changes
+                            </Button>
+                        ) : (<>
+                            
+                            <Pane>
+                                <Dialog
+                                    isShown={deleteConfirmationShown}
+                                    title={`Delete ${contact.name}?`}
+                                    intent="danger"
+                                    onCloseComplete={() => setDeleteConfirmationShown(false)}
+                                    confirmLabel="Delete"
+                                    onConfirm={() => {
+                                        setDeleteConfirmationShown(false);
+                                        handleDelete();
+                                    }}
+                                >
+                                    Are you sure you want to delete {contact.name}?
+                                </Dialog>
+                                <Button 
+                                    onClick={() => setDeleteConfirmationShown(true)} 
+                                    appearance="primary" 
+                                    intent="danger" 
+                                    type="button"
+                                >
+                                    Delete Contact
+                                </Button>
+                            </Pane>
+                        </>)}
                     </div>
                 </form>
                 </>
