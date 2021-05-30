@@ -95,7 +95,6 @@ const NewContact = ({onNewContactAdd}) => {
                         onChange={e => setReasonForKnowing(e.target.value)}
                     />
 
-                    {/* TODO: style these SelectMenu components better, fix bottom margins */}
                     <label className={styles.birthday_label}>Birthday</label>
                     <div ref={birthdayRef} className={styles.birthday_container}>
                         <div>
@@ -192,15 +191,14 @@ const NewContact = ({onNewContactAdd}) => {
                             onChange={e => setAdditionalInfo(e.target.value)}
                         />
                     </Pane>
-                    {/* TODO: restyle the Button better so it's not absolute positioning */}
-                    <Button
-                        type="submit"
-                        className={styles.create_btn} 
-                        marginRight={16} 
-                        appearance="primary" 
-                        intent="success"
-                        //isLoading={true}
-                    >Create</Button>
+                    <div className={styles.submit_btn_container}>
+                        <Button
+                            type="submit"
+                            marginRight={16} 
+                            appearance="primary" 
+                            intent="success"
+                        >Create</Button>
+                    </div>
                 </div>
             </form>
         </div>

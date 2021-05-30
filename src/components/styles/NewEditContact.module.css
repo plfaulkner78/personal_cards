@@ -26,10 +26,11 @@
     max-width: fit-content;
     /* background-color: yellow; */
 }
-.create_btn {
-    position: absolute;
-    left: 50%;
-    margin-top: 1em;
+.submit_btn_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 8%;
+    margin-bottom: 15%;
 }
 .title_button_container {
     display: flex;
@@ -46,6 +47,7 @@
 .birthday_container {
     display: flex;
     margin-top: 1em;
+    margin-bottom: 1em;
     /* background-color: red; */
 }
 .birthday_label {

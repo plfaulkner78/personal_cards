@@ -174,7 +174,6 @@ const ContactDetails = ({contacts, setContactState}) => {
                             width="50vh"
                         />
 
-                        {/* TODO: style these SelectMenu components better, fix bottom margins */}
                         <label className={styles.birthday_label}>Birthday</label>
                         <div ref={birthdayRef} className={styles.birthday_container}>
                             <div>
@@ -275,37 +274,37 @@ const ContactDetails = ({contacts, setContactState}) => {
                                 disabled={!isEditing}
                             />
                         </Pane>
-                        {/* TODO: restyle the Button better so it's not absolute positioning */}
-                        {isEditing ? (
-                            <Button appearance="primary" intent="success" type="submit">
-                                Save Changes
-                            </Button>
-                        ) : (<>
-                            
-                            <Pane>
-                                <Dialog
-                                    isShown={deleteConfirmationShown}
-                                    title={`Delete ${contact.name}?`}
-                                    intent="danger"
-                                    onCloseComplete={() => setDeleteConfirmationShown(false)}
-                                    confirmLabel="Delete"
-                                    onConfirm={() => {
-                                        setDeleteConfirmationShown(false);
-                                        handleDelete();
-                                    }}
-                                >
-                                    Are you sure you want to delete {contact.name}?
-                                </Dialog>
-                                <Button 
-                                    onClick={() => setDeleteConfirmationShown(true)} 
-                                    appearance="primary" 
-                                    intent="danger" 
-                                    type="button"
-                                >
-                                    Delete Contact
+                        <div className={styles.submit_btn_container}>
+                            {isEditing ? (
+                                <Button appearance="primary" intent="success" type="submit">
+                                    Save Changes
                                 </Button>
-                            </Pane>
-                        </>)}
+                            ) : (<>
+                                <Pane>
+                                    <Dialog
+                                        isShown={deleteConfirmationShown}
+                                        title={`Delete ${contact.name}?`}
+                                        intent="danger"
+                                        onCloseComplete={() => setDeleteConfirmationShown(false)}
+                                        confirmLabel="Delete"
+                                        onConfirm={() => {
+                                            setDeleteConfirmationShown(false);
+                                            handleDelete();
+                                        }}
+                                    >
+                                        Are you sure you want to delete {contact.name}?
+                                    </Dialog>
+                                    <Button 
+                                        onClick={() => setDeleteConfirmationShown(true)} 
+                                        appearance="primary" 
+                                        intent="danger" 
+                                        type="button"
+                                    >
+                                        Delete Contact
+                                    </Button>
+                                </Pane>
+                            </>)}
+                        </div>
                     </div>
                 </form>
                 </>
