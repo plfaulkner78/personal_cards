@@ -24,6 +24,26 @@
     flex: 4;
     text-align: center;
 }
+.outer_name_container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.contact_name_container {
+    width: 300px;
+    /* background-color: red; */
+}
+.contact_name {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    /* Adds a hyphen where the word breaks */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
 .birthday_icon_container {
     display: flex;
     justify-content: center;
@@ -37,5 +57,8 @@
 @media screen and (max-width: 800px) {
     .card_container {
         width: 60vh;
+    }
+    .contact_name_container {
+        width: 250px;
     }
 }

@@ -17,8 +17,12 @@ const PreviewCard = ({info}) => {
             </div>
             <div className={styles.divider_decoration} />  
             <div className={styles.content_section}>
-                <h1>{info.name}</h1>
-                <p>{info.reasonForKnowing}</p>
+                <div className={styles.outer_name_container}>
+                    <div className={styles.contact_name_container}>
+                        <h1 className={styles.contact_name}>{info.name}</h1>
+                    </div>
+                </div>
+                <p style={{marginTop: '0px'}}>{info.reasonForKnowing}</p>
                 <Link style={{color: '#34b7eb'}} to={`/details/${info.id}`}>
                     <p>Details</p>
                 </Link>

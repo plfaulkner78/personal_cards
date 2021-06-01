@@ -143,12 +143,14 @@ const ContactDetails = ({contacts, setContactState}) => {
                 </div>
             ) : (<>
                 <div className={styles.avatar_container}>
-                    <Avatar className={styles.avatar} name={contact.name} size={150} marginRight={16} />
+                    <Avatar className={styles.avatar} name={contact.name} size={150} />
                 </div>
                 <form className={styles.form_container} onSubmit={handleSaveChanges}>
                     <div className={styles.contact_form}>
                         <div className={styles.title_button_container}>
-                            <h1>{contact.name}</h1>
+                            <div className={styles.contact_name_container}>
+                                <h1 className={styles.contact_name}>{contact.name}</h1>
+                            </div>
                             {isEditing ? (
                                 <Button onClick={handleCancel}>Cancel</Button>
                             ) : <Button onClick={(e) => {

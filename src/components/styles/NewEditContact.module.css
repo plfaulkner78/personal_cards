@@ -5,20 +5,21 @@
     display: flex;
 }
 .avatar_container {
-    /* background-color: red; */
     flex: 3;
     display: flex;
     justify-content: flex-end;
+    /* background-color: red; */
 }
 .avatar {
     margin-top: 30%;
+    margin-right: 16px;
 }
 .avatar:hover {
     cursor: pointer;
 }
 .form_container {
-    /* background-color: blue; */
     flex: 5;
+    /* background-color: blue; */
 }
 .contact_form {
     margin-top: 10%;
@@ -36,6 +37,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.contact_name_container {
+    width: 250px;
+    /* background-color: red; */
+}
+.contact_name {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    /* Adds a hyphen where the word breaks */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
 }
 .spinner_container {
     display: flex;
@@ -60,12 +74,44 @@
     margin-left: 10%;
 }
 .delete_icon_container {
-    /* background-color: chocolate; */
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: flex-end;
+    /* background-color: chocolate; */
 }
 .delete_icon_container:hover {
     cursor: pointer;
+}
+
+@media screen and (max-width: 960px) {
+    .avatar_container {
+        flex: 2;
+        /* background-color: lightpink; */
+    }
+}
+@media screen and (max-width: 700px) {
+    .content_container {
+        display: flex;
+        flex-direction: column;
+    }
+    .avatar_container {
+        justify-content: center;
+        align-items: center;
+        /* background-color: black; */
+    }
+    .avatar {
+        margin-top: 10%;
+        margin-right: 0px;
+    }
+    .form_container {
+        display: flex;
+        justify-content: center;
+        /* background-color: blue; */
+    }
+    .contact_form {
+        margin-left: 0px;
+        margin-top: 5%;
+        /* background-color: red; */
+    }
 }

@@ -23,6 +23,10 @@ const NewContact = ({onNewContactAdd}) => {
     const history = useHistory();
     const birthdayRef = useRef();
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     function handleFormSubmit(e) {
         e.preventDefault();
 
@@ -73,8 +77,8 @@ const NewContact = ({onNewContactAdd}) => {
         <div className={styles.content_container}>
             <div className={styles.avatar_container}>
                 {name ? (
-                    <Avatar className={styles.avatar} name={name} size={150} color='green' marginRight={16} />
-                    ) : (<Avatar className={styles.avatar} src={DefaultAvatar} size={150} marginRight={16} />)}
+                    <Avatar className={styles.avatar} name={name} size={150} color='green' />
+                    ) : (<Avatar className={styles.avatar} src={DefaultAvatar} size={150} />)}
             </div>
             <form className={styles.form_container} onSubmit={handleFormSubmit}>
                 <div className={styles.contact_form}>
