@@ -14,7 +14,7 @@ const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, 
         } else if (index === 1) {
             sortByDate();
         } else {
-            sortByBirthday()
+            sortByBirthday();
         }
     }
 
@@ -22,7 +22,7 @@ const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, 
         <div className={styles.content_container}>
             <div className={styles.list_container}>
                 <div className={styles.sort_container}>
-                    <h2>Sort by: </h2>
+                    <h2 className={styles.sort_title}>Sort by: </h2>
                     <div className={styles.tabs_container}>
                         <Tablist>
                             {tabs.map((tab, index) => (

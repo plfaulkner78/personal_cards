@@ -13,7 +13,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-color: cadetblue; */
     flex: 1;
 }
 .divider_decoration {
@@ -24,16 +23,19 @@
 .content_section {
     flex: 4;
     text-align: center;
-    /* background-color: red; */
 }
 .birthday_icon_container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 15%;
-    /* background-color: red; */
 }
 .cake_icon {
     width: 50%;
-    /* background-color: salmon; */
+}
+
+@media screen and (max-width: 800px) {
+    .card_container {
+        width: 60vh;
+    }
 }

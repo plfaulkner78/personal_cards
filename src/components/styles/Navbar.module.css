@@ -11,7 +11,7 @@
 }
 .logo_link {
     text-decoration: none;
-    margin-left: 5vh;
+    margin-left: 10vh;
 }
 .home_logo {
     margin-top: 0;
@@ -27,8 +27,19 @@
     margin-right: 5vh;
 }
 
-@media screen and (max-width: 960px) {
-    .navbar_container {
-        /* TODO: when the screen size is too small, make it a hamburger button with a slide out menu */
+@media screen and (max-width: 700px) {
+    .logo_link {
+        margin-left: 5vh;
+    }
+}
+@media screen and (max-width: 550px) {
+    .logo_link {
+        margin-left: 3%;
+    }
+    .buttons_container {
+        margin-right: 3%;
+    }
+    .add_contact_button {
+        margin-right: 2vh;
     }
 }
