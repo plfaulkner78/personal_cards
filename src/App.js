@@ -21,7 +21,9 @@ function App() {
   // 3. When a search term is changed, you'll filter but DO NOT updated contact state.
 
   useEffect(() => {
-    sortAlphabetically();
+    if (contacts.length) {
+      sortAlphabetically();
+    }
   }, []);
 
   function sortAlphabetically() {
@@ -48,19 +50,20 @@ function App() {
     setContacts(copy);
   }
 
+  // These must be zero-indexed to work properly with moment in the function below.
   const month_to_index = {
     "January": 0,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12
+    "February": 1,
+    "March": 2,
+    "April": 3,
+    "May": 4,
+    "June": 5,
+    "July": 6,
+    "August": 7,
+    "September": 8,
+    "October": 9,
+    "November": 10,
+    "December": 11
   };
   
   function month_date_diff(compareMonth, compareDate) {
@@ -71,7 +74,7 @@ function App() {
     let now = moment();
 
     // Get current month, date, and year as ints
-    let [currentMonth, currentDate, currentYear] = now.format("M D YYYY").split(" ").map(num => parseInt(num));
+    let [currentMonth, currentDate, currentYear] = [now.month(), now.date(), now.year()];
 
     if (compareMonth < currentMonth) {
       // If the month has already passed this year, compare today to next year's birthday
@@ -92,7 +95,7 @@ function App() {
         return 0;
       }
     } else {
-      // The birthday month hasn't happened yet this year, so the birthday hasn't happened
+      // compareMonth > currentMonth, so the birthday month hasn't happened yet this year.
       let nextBirthday = moment([currentYear, compareMonth, compareDate]);
       return nextBirthday.diff(now);
     }
@@ -105,12 +108,10 @@ function App() {
       let a_diff = month_date_diff(month_to_index[a.birthMonth], a.birthDate);
       let b_diff = month_date_diff(month_to_index[b.birthMonth], b.birthDate);
       
-      if (a_diff < b_diff) {
+      if (a_diff <= b_diff) {
         return -1;
-      } else if (a_diff > b_diff) {
-        return 1;
       } else {
-        return 0;
+        return 1;
       }
     });
 

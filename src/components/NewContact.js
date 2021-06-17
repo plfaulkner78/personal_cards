@@ -44,8 +44,6 @@ const NewContact = ({onNewContactAdd}) => {
 
         onNewContactAdd(contactInfo);
 
-        console.log("Newly created contact: ", contactInfo);
-
         history.push('/');
         window.scrollTo(0, 0);
     }
