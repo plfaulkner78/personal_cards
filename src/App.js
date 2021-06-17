@@ -11,8 +11,9 @@ import moment from 'moment';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [contacts, setContacts] = useState(sampleArr);
-  // const [contacts, setContacts] = useState([]);
+  // TODO: make sure below defaults to empty
+  // const [contacts, setContacts] = useState(sampleArr);
+  const [contacts, setContacts] = useState([]);
 
   // Here is how you'll search and sort:
   // 1. Sort data initially in a useEffect. (normally you'd read from a database at this point)

@@ -1,7 +1,8 @@
 import {useState} from "react";
 import styles from "./styles/CardsListing.module.css";
 import PreviewCard from "./PreviewCard";
-import { Button, Tablist, Tab } from 'evergreen-ui';
+import { Button, Tablist, Tab, NewPersonIcon } from 'evergreen-ui';
+import {Link} from "react-router-dom";
 
 const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, sortByDate, sortByBirthday}) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -29,6 +30,7 @@ const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, 
                                 <Tab
                                     key={tab}
                                     id={tab}
+                                    disabled={contacts.length === 0}
                                     onSelect={() => handleTabSelect(index)}
                                     isSelected={index === selectedIndex}
                                     aria-controls={`panel-${tab}`}
@@ -42,13 +44,19 @@ const CardsListing = ({contacts, addSampleData, searchTerm, sortAlphabetically, 
                 {contacts.length > 0 ? (
                     contacts.map(item => <PreviewCard info={item} key={item.id} />)
                 ) : (<>
-                    {/* TODO: style this better */}
                     {searchTerm.length === 0 ? (<>
                         <h1>You don't have any contacts!</h1>
-                        <h2>Add contacts to get started</h2>
-                        <h2>Or click below to generate sample data.</h2>
+                        <h2>Add new contacts to get started.</h2>
+                        <Link style={{textDecoration: 'none'}} to='/newContact'>
+                            <Button iconBefore={NewPersonIcon}>Add contact</Button>
+                        </Link>
+                        <h2>Or click below to generate sample contacts.</h2>
                         <Button onClick={addSampleData}>Generate Sample Data</Button>
-                    </>) : <h1>No Results</h1>}
+                    </>) : (
+                        <div style={{marginTop: '10%'}}>
+                            <h1>No Results</h1>
+                        </div>
+                    )}
                 </>)}
             </div>
         </div>

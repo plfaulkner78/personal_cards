@@ -1,7 +1,7 @@
 .App {
   background-color: #fffff7;
-  /* background-color: white; */
   min-height: 100vh;
+  font-family: "MiloTE","MiloTESec",Charter,"Bitstream Charter","Iowan Old Style","Calisto MT",serif;;
 }
 
 
