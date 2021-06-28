@@ -22,7 +22,7 @@ const PreviewCard = ({info}) => {
                         <h1 className={styles.contact_name}>{info.name}</h1>
                     </div>
                 </div>
-                <p style={{marginTop: '0px'}}>{info.reasonForKnowing}</p>
+                {info.reasonForKnowing ? <p style={{marginTop: '0px'}}>{info.reasonForKnowing}</p> : <></>}
                 <Link style={{color: '#34b7eb'}} to={`/details/${info.id}`}>
                     <p>Details</p>
                 </Link>
